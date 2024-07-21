@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,9 +26,18 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private JavaMailSender javaMailSender;
+
 	// POST-create user
-	@PostMapping("/")
+	@PostMapping("/createUser")
 	public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
+//	String to= userDto.getEmail();
+//	String subject="Welcome to API Development";
+//	String message="Congratulations !! You have Successfully Created your Account .. ";
+//
+//	userService.sendSimpleEmail(to,subject,message);
+
 		UserDto createUserDto = this.userService.createUser(userDto);
 		return new ResponseEntity<>(createUserDto, HttpStatus.CREATED);
 	}

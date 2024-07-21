@@ -10,12 +10,15 @@ import com.backendjavacode.blog.repositories.RoleRepo;
 import com.backendjavacode.blog.repositories.UserRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.backendjavacode.blog.payloads.UserDto;
 import com.backendjavacode.blog.services.UserService;
 import com.backendjavacode.blog.config.AppConstants;
 
+import javax.mail.internet.MimeMessage;
 
 
 @Service
@@ -32,6 +35,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private RoleRepo roleRepo;
+
+	@Autowired
+	private JavaMailSender javaMailSender;
 
 	@Override
 	public UserDto createUser(UserDto userDto) {
@@ -117,5 +123,20 @@ public class UserServiceImpl implements UserService {
 		User newUser = this.userRepo.save(user);
 		return this.modelMapper.map(newUser, UserDto.class);
 	}
+	@Override
+	public void sendSimpleEmail(String to, String subject, String text) {
+		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
 
+		try {
+			helper.setTo(to);
+			helper.setSubject(subject);
+			helper.setText(text, false); // Set to false if you don't want HTML content
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		javaMailSender.send(mimeMessage);
+	}
 }
+
+
