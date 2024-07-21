@@ -29,11 +29,8 @@ public class CommentServiceImpl implements CommentService {
 
 		Post post = this.postRepo.findById(postId)
 				.orElseThrow(() -> new ResourceNotFoundException("Post", "post id ", postId));
-
 		Comment comment = this.modelMapper.map(commentDto, Comment.class);
-
 		comment.setPost(post);
-
 		Comment savedComment = this.commentRepo.save(comment);
 
 		return this.modelMapper.map(savedComment, CommentDto.class);

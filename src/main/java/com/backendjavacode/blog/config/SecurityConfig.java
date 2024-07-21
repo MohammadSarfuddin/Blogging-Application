@@ -33,9 +33,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableGlobalAuthentication
 public class SecurityConfig {
 
-    public static final String[] PUBLIC_URLS = {"/api/v1/auth/**", "/v3/api-docs", "/v2/api-docs",
+    ///api/v1/auth/**"
+    public static final String[] PUBLIC_URLS = { "api/v1/auth/**", "/api/v1/users/userCreate", "/v3/api-docs", "/v2/api-docs",
             "/swagger-resources/**", "/swagger-ui/**", "/webjars/**"
-
     };
 
     @Autowired
@@ -46,7 +46,6 @@ public class SecurityConfig {
 
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
-
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -59,6 +58,7 @@ public class SecurityConfig {
                 .permitAll()
                 .antMatchers(HttpMethod.GET)
                 .permitAll()
+                .antMatchers(HttpMethod.POST).permitAll()
                 .anyRequest()
                 .authenticated()
                 .and().exceptionHandling()
