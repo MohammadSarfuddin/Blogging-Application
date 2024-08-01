@@ -35,7 +35,7 @@ public class SecurityConfig {
 
     ///api/v1/auth/**"
     public static final String[] PUBLIC_URLS = { "api/v1/auth/**", "/api/v1/users/userCreate", "/v3/api-docs", "/v2/api-docs",
-            "/swagger-resources/**", "/swagger-ui/**", "/webjars/**"
+            "/swagger-resources/**", "/swagger-ui/**", "/webjars/**", "/api/v1/users/updateUsingPatch"
     };
 
     @Autowired
@@ -59,6 +59,7 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.GET)
                 .permitAll()
                 .antMatchers(HttpMethod.POST).permitAll()
+                .antMatchers(HttpMethod.PATCH).permitAll()
                 .anyRequest()
                 .authenticated()
                 .and().exceptionHandling()
