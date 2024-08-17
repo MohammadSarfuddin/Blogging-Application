@@ -131,7 +131,6 @@ public class UserController {
 //			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file: " + e.getMessage());
 //		}
 //	}
-
 //	implementing the search api by the user name.
 	@GetMapping("/search/{keyword}")
 	public ResponseEntity<List<UserDto>> searchUserByEmail(@PathVariable("keyword") String keyword) {
